@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter.filedialog import askopenfilename
 from tkinter.filedialog import asksaveasfile
 import pandas as pd
+import numpy as np
 
 root= tk.Tk()
 
@@ -18,7 +19,8 @@ def random_entry():
     df = df[['Name','Recipient Primary Major','Personal Email',
             'Response Status','Knowledge Source','Outcome',
             'How likely would you recommend using the services and resources available through your Career Development office to a future student?']]
-    df = df[df['Knowledge Source'] == 'Survey Response'].dropna(how='any').sample(1)
+    df = df[(df['Knowledge Source'] == 'Survey Response')&
+            (df['Outcome'] != 'Still Looking')].dropna(how='any').sample(1)
     df_name = df.Name.item()
     label1 = tk.Label(root, text=df_name)
     canvas1.create_window(200, 160, window=label1)
